@@ -24,7 +24,7 @@ h1{font-size:21px;font-weight:700;margin-bottom:4px;text-align:center;letter-spa
 label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text)}
 select,input[type="number"],input[type="text"],textarea{width:100%;padding:11px;border:1px solid var(--border);border-radius:10px;font-size:14px;background:#fff;color:var(--text);transition:border 0.2s}
 select:focus,input:focus,textarea:focus{border-color:var(--primary);outline:none}
-textarea{height:130px;resize:vertical;font-family:monospace;line-height:1.5}
+textarea{height:120px;resize:vertical;font-family:monospace;line-height:1.5;margin-bottom:4px}
 input[type="range"]{width:100%;margin:8px 0;cursor:pointer}
 .range-val{font-size:14px;font-weight:700;color:var(--primary);float:right}
 .calc-btn{width:100%;padding:14px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-top:10px;box-shadow:0 4px 6px -1px rgba(13,148,136,0.2);transition:background 0.2s}
@@ -63,26 +63,28 @@ th{background:var(--bg);font-weight:700;color:var(--slate);position:sticky;top:0
 <div class="group">
 <label for="currency">Валюта оценки SEO-бюджета</label>
 <select id="currency" onchange="updatePreview()">
-<option value="替代1">Рубль (₽)</option>
+<option value="₽">Рубль (₽)</option>
 <option value="грн">Гривна (грн)</option>
 <option value="₸">Тенге (₸)</option>
 <option value="USD">Доллар ($)</option>
 </select>
 </div>
 
+<!-- СКВЕЗНОЕ ПОЛЕ ВВОДА: ТЕПЕРЬ ВСЕГДА НА ЭКРАНЕ ВЫШЕ ВКЛАДОК -->
+<div class="group">
+<label for="seo-text-input">Анализируемый текст статьи</label>
+<textarea id="seo-text-input" placeholder="Скопируйте сюда ваш текст или сгенерированную ИИ статью для мгновенной проверки..." oninput="updatePreview()"></textarea>
+</div>
+
 <div class="tabs">
-<button class="tab-btn active" onclick="switchTab('text', this)">Ядро текста</button>
+<button class="tab-btn active" onclick="switchTab('text', this)">N-Граммы</button>
 <button class="tab-btn" onclick="switchTab('semantic', this)">Вес TF-IDF</button>
 <button class="tab-btn" onclick="switchTab('spambrain', this)">Фильтры Google</button>
 </div>
-<!-- ВКЛАДКА 1: ЯДРО ТЕКСТА -->
+<!-- ВКЛАДКА 1: НАСТРОЙКИ N-ГРАММ -->
 <div id="tab-text" class="tab-content active">
 <div class="group">
-<label for="seo-text-input">Вставьте анализируемый текст статьи</label>
-<textarea id="seo-text-input" placeholder="Скопируйте сюда ваш текст или сгенерированную ИИ статью для проверки..." oninput="updatePreview()"></textarea>
-</div>
-<div class="group">
-<label for="ngram-depth">Глубина сканирования фраз (N-Gram Depth) <span class="range-val" id="ngram-val">1-Gram</span></label>
+<label for="ngram-depth">Глубина сканирования фраз (N-Gram Depth)</label>
 <select id="ngram-depth" onchange="updatePreview()">
 <option value="1">Unigrams (Одиночные слова)</option>
 <option value="2">Bigrams (Двухсловные фразы)</option>
@@ -143,14 +145,14 @@ th{background:var(--bg);font-weight:700;color:var(--slate);position:sticky;top:0
 </thead>
 <tbody>
 <tr>
-<td colspan="4" style="text-align:center; color:var(--text-muted); padding:20px;">Вставьте текст для построения матрицы</td>
+<td colspan="4" style="text-align:center; color:var(--text-muted); padding:20px;">Введите текст в поле выше для построения матрицы</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 
-<a href="https://kwork.ru" target="_blank" class="partner-btn" id="partner-link">🔗 Найти LSI-копирайтера на Kwork (Заглушка)</a>
+<a href="https://kwork.ru" target="_blank" class="partner-btn" id="partner-link">✍️ Найти LSI-копирайтера на Kwork</a>
 </div>
 
 <div class="skynet-box" id="skynet-container">
@@ -390,7 +392,7 @@ function calculateAiMetrics() {
   tbody.innerHTML = "";
 
   if (data.lsiData.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:20px;">Введите текст для построения матрицы</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:20px;">Введите текст в поле выше для построения матрицы</td></tr>`;
   } else {
     data.lsiData.forEach(item => {
       const tr = document.createElement('tr');
